@@ -1,0 +1,33 @@
+notifications:
+  email: false
+
+sudo: false
+
+language: php
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
+install:
+  - alias composer=composer\ -n && composer selfupdate
+  - composer validate
+  - composer --prefer-source install
+
+script:
+  - bin/test --coverage-clover=build/logs/clover.xml
+
+after_success:
+  - composer --prefer-source require satooshi/php-coveralls
+  - vendor/bin/coveralls -v
+
+env:
+  - secure: "\
+    yKalql8C7iLuwpkWUbaUu279jIswDuY5Z8RhayeuoaPSOmgIXGKHnYniKl+DX5GQS90HkjW8hNNWQyv/e+qpe+aO0IRMxEeLewrP/MCfjTu0GqIZnM\
+    KXqLYzebg2eo4Qrc3ZchjK4cGz266wJMV6VgWUNmc0cHTe1ZjObfvx7LXxXg3W8Nr1zJcefQEGAwvU2Yz393FrqfkvbrY//SBAHBH/sL6LCMBqk0wq\
+    s0Pe4e2hJegnsQHZPhQADYVFQ/GWnLvBWilHPYDMMw39q8hJen+CSb0GPFofDRiohKkZ2p1GxLLZAlQRSEUJXXKxC4PuQPfJaozxaOOEgZ9o6K+Wao\
+    siSq09VuuooWfGQZjHNmcgU6f4npERInaH2nyPePphYzKC6M0LlTxkkWhgyV/WLGXbW2ya2TFE41EMFR5BsQZIo/pM+w7wzyzNpVdvdGj558uB4Cju\
+    leYDAMylRyzlcngwZMzSlmLfEc6ZGtubjH2tyCwO5glOZUAmYfQbwKiViLCeBuVW22IJHNayY5mpJTvLv+DZgJFdLU8RC4Yby3PxM1sD+7Jwz9SV4p\
+    RdW3oFt5VHkoSvTfdascX6O82dOAKdfQBTugrOVumAWsZs+zY8zoTiu8S6tVgCTmF6iScnPe68HhI49HHBRPjY35phoDFGXcAqNU7ntYyxoWIcl0g="
